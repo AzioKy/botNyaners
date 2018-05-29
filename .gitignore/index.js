@@ -41,9 +41,6 @@ bot.on('message', function (message){
   if (Love.match(message)){
     return Love.action(message)
   }
-  if (Team.match(message)){
-    return Team.action(message)
-  }
 })
 
-bot.login('NDUwOTg2NzkzNDk2NDc3NzEw.De7N3w.gaPvJH_jsiHdis42s2C4hElAxPI')
+bot.login('process.env.TOKEN')

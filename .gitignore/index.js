@@ -3,7 +3,7 @@ const bot = new Discord.Client()
 const Opgg = require("./opgg")
 const UltimateBravery = require("./ultimateBravery")
 const Love = require("./love")
-const Team = require("./team")
+
 
 bot.on('ready', function () {
   console.log("Je suis connecté !")

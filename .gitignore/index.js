@@ -36,11 +36,11 @@ bot.on('message', function (message){
     return UltimateBravery.action(message)
   }
   if (message.content === "O'help"){
-    message.reply('Voici les commandes du serveur : \n- O\'opgg [pseudo]      cette commande te permettra de voir une page opgg.\n\n-O\'ultimateBravery     cette commande te permet d\'avoir un stuff pour l\'utimate bravery.')
+    message.reply('Voici les commandes du serveur : \n- O\'opgg [pseudo]      cette commande te permettra de voir une page opgg.\n\n-O\'ultimateBravery     cette commande te permet d\'avoir un stuff pour l\'utimate bravery.\n\n-O\'love [Prenom en maj] [Prenom en maj]    calcul de la compatibilité')
   }
   if (Love.match(message)){
     return Love.action(message)
   }
 })
 
-bot.login('process.env.TOKEN')
+bot.login('NDUwNjc4MDMwMTkzNTI0NzY2.De8Hag.TLDrszlhKY_QhmsEP5r_lptdph0')

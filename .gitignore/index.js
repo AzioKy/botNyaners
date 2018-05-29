@@ -2,7 +2,8 @@ const Discord = require('discord.js')
 const bot = new Discord.Client()
 const Opgg = require("./opgg")
 const UltimateBravery = require("./ultimateBravery")
-
+const Love = require("./love")
+const Team = require("./team")
 
 bot.on('ready', function () {
   console.log("Je suis connecté !")
@@ -16,6 +17,17 @@ bot.on('guildMemberAdd', function (member){
   }).catch(console.error)
 })
 
+/*bot.on('guildMemberRemove', function(member){
+   let textChannel=member.guild.channels
+  .filter(function (channel) { return channel.type === 'text' })
+  .first()
+
+  textChannel
+  .then(function (channel){
+    channel.send("Au revoir "+ member.displayName)
+  })
+})*/
+
 bot.on('message', function (message){
   if (Opgg.match(message)){
     return Opgg.action(message)
@@ -26,6 +38,12 @@ bot.on('message', function (message){
   if (message.content === "O'help"){
     message.reply('Voici les commandes du serveur : \n- O\'opgg [pseudo]      cette commande te permettra de voir une page opgg.\n\n-O\'ultimateBravery     cette commande te permet d\'avoir un stuff pour l\'utimate bravery.')
   }
+  if (Love.match(message)){
+    return Love.action(message)
+  }
+  if (Team.match(message)){
+    return Team.action(message)
+  }
 })
 
-bot.login(process.env.TOKEN)
+bot.login('NDUwOTg2NzkzNDk2NDc3NzEw.De7N3w.gaPvJH_jsiHdis42s2C4hElAxPI')

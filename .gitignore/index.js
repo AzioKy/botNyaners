@@ -3,7 +3,9 @@ const bot = new Discord.Client()
 const Opgg = require("./opgg")
 const UltimateBravery = require("./ultimateBravery")
 const Love = require("./love")
-const Team = require("./team")
+
+var joueurs=[];
+var joueurtxt=[];
 
 bot.on('ready', function () {
   console.log("Je suis connecté !")
@@ -17,6 +19,7 @@ bot.on('guildMemberAdd', function (member){
   }).catch(console.error)
 })
 
+
 bot.on('guildMemberRemove', function(member){
   member.guild.channels.find("name","sortie").send(member.user.username+` Babaille à toi ${member}`)
 })
@@ -29,13 +32,64 @@ bot.on('message', function (message){
     return UltimateBravery.action(message)
   }
   if (message.content === "O'help"){
-    message.reply('Voici les commandes du serveur : \n- O\'opgg [pseudo]      cette commande te permettra de voir une page opgg.\n\n-O\'ultimateBravery     cette commande te permet d\'avoir un stuff pour l\'utimate bravery.')
+    var help_embed=new Discord.RichEmbed()
+    .setColor("#40A497")
+    .setTitle("Voici les commandes de O'Shishin !")
+    .addField("O'opgg [pseudo]","Cette commande te permettra de voir une page op.gg.")
+    .addField("O'ultimateBravery","Cette commande te permettra d'avoir un stuff pour l'ultimate bravery.")
+    .addField("O'love [prenom en maj] [prenom en maj]","Test ta compatibilité avec les autres :D")
+    .addField(`O'searchTeam [pseudoLOL] [pseudo discord] [elo en minuscule]`,"C'est une commande pour être dans la liste des joueurs en attente d'une team. IL NE FAUT PAS METTRE D'ESPACES DANS LES PSEUDOS.")
+    .addField(`O'findTeam [elo en minuscule]`,"Commande pour trouver des joueurs en fonctions de leur elo.")
+    .addField(`O'delete [pseudoLOL]`,"Si tu as fais une erreur, trouvé une team ou simplement plus envie de participer utilise cette commande :D")
+    message.channel.sendMessage(help_embed)
   }
   if (Love.match(message)){
     return Love.action(message)
   }
-  if (Team.match(message)){
-    return Team.action(message)
+  if (message.content.startsWith("O'findTeam")){
+    let args=message.content.split(' ')
+    var list=[]
+    var args1 = args.shift();
+    var elo =args.shift();
+    for (var i=0; i < joueurs.length; i++) {
+      if(elo===joueurs[i][2]){
+        list.push(" "+joueurs[i][0]+"/"+joueurs[i][1])
+      }
+  }
+  message.member.createDM().then(function(channel){
+    channel.send("voici les joueurs qui sont succeptible de t'interresser : "+list)
+  })
+}
+  if (message.content.startsWith("O'delete")){
+    let args=message.content.split(' ')
+    var list=[]
+    var args1 = args.shift();
+    var pseudoLOL =args.shift();
+    for (var i=0; i < joueurs.length; i++) {
+      if(pseudoLOL===joueurs[i][0]){
+        joueurs.splice(i,1)
+        console.log(joueurs)
+      }
+  }
+    message.member.createDM().then(function(channel){
+    channel.send("Tu as bien été supprimé de la base de donnée :D")
+  })
+  }
+  if (message.content.startsWith("O'searchTeam")){
+    let args=message.content.split(' ')
+    var args1 = args.shift();
+    var pseudoLOL =args.shift();
+    var discord=args.shift();
+    var elo = args.shift();
+    var contenu=[pseudoLOL,discord,elo]
+    var text=["["+pseudoLOL,discord,elo+"]"]
+    joueurs.push(contenu)
+    joueurtxt.push(text)
+    message.member.guild.channels.find("name","team").send("la liste de joueur "+joueurtxt)
+    message.member.createDM().then(function(channel){
+      channel.send("Tu as bien été ajouté à la base de donnée avec les valeurs : "+contenu)
+    })
+    console.log(joueurs)
   }
 })
 

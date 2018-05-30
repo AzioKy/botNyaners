@@ -49,16 +49,25 @@ bot.on('message', function (message){
   if (message.content.startsWith("O'findTeam")){
     let args=message.content.split(' ')
     var list=[]
+    var cpt=0
     var args1 = args.shift();
     var elo =args.shift();
     for (var i=0; i < joueurs.length; i++) {
       if(elo===joueurs[i][2]){
         list.push(" "+joueurs[i][0]+"/"+joueurs[i][1])
+        cpt=cpt+1
       }
   }
+  if (cpt>0){
   message.member.createDM().then(function(channel){
     channel.send("voici les joueurs qui sont succeptible de t'interresser : "+list)
   })
+}
+  else{
+    message.member.createDM().then(function(channel){
+      channel.send("Il n'y a personne succeptible de vous interresser :(")
+    })
+  }
 }
   if (message.content.startsWith("O'delete")){
     let args=message.content.split(' ')
@@ -82,10 +91,8 @@ bot.on('message', function (message){
     var discord=args.shift();
     var elo = args.shift();
     var contenu=[pseudoLOL,discord,elo]
-    var text=["["+pseudoLOL,discord,elo+"]"]
     joueurs.push(contenu)
-    joueurtxt.push(text)
-    message.member.guild.channels.find("name","team").send("la liste de joueur "+joueurtxt)
+    message.member.guild.channels.find("name","team").send("la liste de joueur "+joueurs)
     message.member.createDM().then(function(channel){
       channel.send("Tu as bien été ajouté à la base de donnée avec les valeurs : "+contenu)
     })

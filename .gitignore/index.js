@@ -86,6 +86,7 @@ bot.on('message', function (message){
     for (var i=0; i < joueurs.length; i++) {
       if(pseudoLOL===joueurs[i][0]){
         joueurs.splice(i,1)
+        message.member.guild.channels.find("name","team").send("la liste de joueur "+joueurs)
         console.log(joueurs)
       }
   }

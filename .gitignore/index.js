@@ -24,7 +24,7 @@ bot.on('guildMemberAdd', function (member){
   .addField("On te souhaite de bien t'amuser parmis nous :D","--------------------------")
   .setThumbnail(member.user.displayAvatarURL)
   
-  member.guild.channels.find("name","general").send(add_embed)
+  member.guild.channels.find("name","raconte-ta-vie").send(add_embed)
 })
 
 
